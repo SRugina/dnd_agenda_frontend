@@ -1,0 +1,12 @@
+export const SESSION_PUBLISH = "publishSession";
+export const SESSION_DELETE = "deleteSession";
+export const SESSION_EDIT = "editSession";
+export const SESSION_RESET_STATE = "resetSessionState";
+export const CHECK_AUTH = "checkAuth";
+export const FETCH_SESSION = "fetchSession";
+export const FETCH_SESSIONS = "fetchSessions";
+export const FETCH_PROFILE = "fetchProfile";
+export const LOGIN = "login";
+export const LOGOUT = "logout";
+export const REGISTER = "register";
+export const UPDATE_USER = "updateUser";
