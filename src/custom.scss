@@ -1,0 +1,132 @@
+html {
+  position: relative;
+  min-height: 100vh;
+  background: url("https://dnd.wizards.com/sites/all/themes/dx/img/interface/page-background.jpg") 0 0 repeat #f9f7ec;
+  background-size: auto !important;
+  padding-bottom: 100px;
+}
+
+body {
+  background-color: transparent !important;
+}
+
+.home-page {
+  background-color: transparent;
+}
+
+.home-banner {
+  background: url("https://media.dnd.wizards.com/images/head-banner/04-PRODUCT-INFO_Tabletop_Hero_PHB.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  &:after {
+    content: "";
+    height: 170px;
+    background: url("https://dnd.wizards.com/sites/all/themes/dx/img/interface/page-header-mask.png") 0 0 / auto auto repeat-x;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 13rem;
+  }
+
+}
+
+footer {
+  margin-top: 3rem;
+  padding: 1rem 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: url("https://dnd.wizards.com/sites/all/themes/dx/img/footer/background.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: .67em !important;
+}
+
+.profile-page .profile-info {
+  text-align: center;
+  background:
+    #f3f3f3;
+  padding: 2rem 0 1rem;
+
+}
+
+.profile-page .profile-info .profile-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  margin-bottom: 1rem;
+}
+
+.user-img {
+  width: 25px;
+  height: 25px;
+  border-radius: 100px;
+  margin-bottom: 0rem;
+}
+
+
+.preview {
+  padding: 9px;
+  border-radius: 3px;
+  min-height: 20px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+  overflow-y: scroll;
+}
+
+.info {
+  margin: 0 1.5rem 0 0.3rem;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1rem;
+  font-weight: 300;
+  text-align: left;
+}
+
+.light-author {
+  color: #fff;
+  display: block;
+  font-weight: 500 !important;
+}
+
+.light-sub-info {
+  color: #bbb !important;
+  font-size: 0.8rem;
+  display: block;
+}
+
+.dark-author {
+  // color: #000;
+  display: block;
+  font-weight: 500 !important;
+}
+
+.dark-sub-info {
+  color: #bbb !important;
+  font-size: 0.8rem;
+  display: block;
+}
+
+.loading-indicator {
+  width: 20px;
+  margin-right: 10px;
+}
+
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';

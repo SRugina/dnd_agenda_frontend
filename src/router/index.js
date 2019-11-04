@@ -12,12 +12,12 @@ export default new Router({
         {
           path: "",
           name: "home",
-          component: () => import("@/views/HomeGlobal")
+          component: () => import("@/views/HomeFeed")
         },
         {
-          path: "my-feed",
-          name: "home-my-feed",
-          component: () => import("@/views/HomeMyFeed")
+          path: "",
+          name: "search-sessions",
+          component: () => import("@/views/SearchSessions")
         }
       ]
     },
@@ -35,6 +35,11 @@ export default new Router({
       name: "settings",
       path: "/settings",
       component: () => import("@/views/Settings")
+    },
+    {
+      name: "settings-password",
+      path: "/settings/password",
+      component: () => import("@/views/SettingsPassword")
     },
     // Handle child routes with a default, by giving the name to the
     // child.
@@ -58,9 +63,33 @@ export default new Router({
     },
     {
       name: "session-edit",
-      path: "/editor/:slug?",
+      path: "/session-editor/:slug?",
       props: true,
       component: () => import("@/views/SessionEdit")
+    },
+    {
+      name: "session-dm-edit",
+      path: "/session-dm-editor/:slug",
+      props: true,
+      component: () => import("@/views/SessionDMEdit")
+    },
+    {
+      name: "group",
+      path: "/groups/:slug",
+      component: () => import("@/views/Group"),
+      props: true
+    },
+    {
+      name: "group-edit",
+      path: "/group-editor/:slug?",
+      props: true,
+      component: () => import("@/views/GroupEdit")
+    },
+    {
+      name: "group-admin-edit",
+      path: "/group-admin-editor/:slug",
+      props: true,
+      component: () => import("@/views/GroupAdminEdit")
     }
   ]
 });

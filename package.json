@@ -3,20 +3,32 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "cross-env BABEL_ENV=dev vue-cli-service serve",
+    "build": "cross-env BABEL_ENV=dev vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:e2e": "vue-cli-service test:e2e",
-    "test:unit": "vue-cli-service test:unit"
+    "test:e2e": "cross-env BABEL_ENV=test vue-cli-service test:e2e",
+    "test:unit": "cross-env BABEL_ENV=test vue-cli-service test:unit --coverage"
   },
   "dependencies": {
-    "core-js": "^2.6.5",
+    "axios": "^0.19.0",
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.4",
+    "date-fns": "^2.6.0",
+    "dompurify": "^2.0.7",
+    "luxon": "^1.21.0",
+    "marked": "^0.7.0",
     "register-service-worker": "^1.6.2",
+    "v-calendar": "^1.0.0-beta.22",
     "vue": "^2.6.10",
+    "vue-axios": "^2.1.4",
+    "vue-cool-select": "^3.3.0",
+    "vue-datetime": "^1.0.0-beta.10",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-plugin-e2e-nightwatch": "^3.11.0",
     "@vue/cli-plugin-eslint": "^3.11.0",
@@ -28,14 +40,17 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
+    "cross-env": "^6.0.3",
     "eslint": "^5.16.0",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.0.0",
     "lint-staged": "^8.1.5",
     "node-sass": "^4.9.0",
+    "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "webpack-bundle-analyzer": "^3.6.0"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

@@ -1,102 +1,100 @@
 import Vue from "vue";
-import {
-  SessionsService
-} from "@/common/api.service";
+import { SessionsService } from "@/common/api.service";
 import {
   FETCH_SESSION,
   SESSION_PUBLISH,
   SESSION_EDIT,
   SESSION_DELETE,
-  SESSION_RESET_STATE
+  SESSION_RESET_STATE,
+  SESSION_JOIN,
+  SESSION_LEAVE
 } from "./actions.type";
-import {
-  RESET_STATE,
-  SET_SESSION,
-  UPDATE_SESSION_IN_LIST
-} from "./mutations.type";
+import { RESET_SESSION_STATE, SET_SESSION } from "./mutations.type";
+import { DateTime } from "luxon";
+import { parseISO } from "date-fns";
 
 const initialState = {
   session: {
-    dm: {},
+    id: null,
+    slug: "",
     title: "",
     description: "",
-    body: "",
-    tagList: []
-  },
-  comments: []
+    dm: null,
+    session_date: "",
+    date: "",
+    time: "",
+    colour: null,
+    group: null,
+    members: [],
+    guests: []
+  }
 };
 
 export const state = { ...initialState };
 
 export const actions = {
-  async [FETCH_SESSION](context, articleSlug, prevSession) {
-    // avoid extronuous network call if article exists
+  async [FETCH_SESSION](context, sessionSlug, prevSession) {
+    // avoid extronuous network call if session exists
     if (prevSession !== undefined) {
       return context.commit(SET_SESSION, prevSession);
     }
-    const { data } = await SessionsService.get(articleSlug);
-    context.commit(SET_SESSION, data.article);
+    const { data } = await SessionsService.get(sessionSlug);
+    const {
+      id,
+      slug,
+      title,
+      description,
+      dm,
+      sessionDate,
+      colour,
+      group,
+      members,
+      guests
+    } = await data.session;
+
+    const session = {
+      id,
+      slug,
+      title,
+      description,
+      dm,
+      date: parseISO(sessionDate),
+      time: DateTime.fromISO(sessionDate).toISOTime(),
+      colour,
+      group,
+      members,
+      guests
+    };
+
+    context.commit(SET_SESSION, session);
     return data;
   },
-  async [FETCH_COMMENTS](context, articleSlug) {
-    const { data } = await CommentsService.get(articleSlug);
-    context.commit(SET_COMMENTS, data.comments);
-    return data.comments;
-  },
-  async [COMMENT_CREATE](context, payload) {
-    await CommentsService.post(payload.slug, payload.comment);
-    context.dispatch(FETCH_COMMENTS, payload.slug);
-  },
-  async [COMMENT_DESTROY](context, payload) {
-    await CommentsService.destroy(payload.slug, payload.commentId);
-    context.dispatch(FETCH_COMMENTS, payload.slug);
-  },
-  async [FAVORITE_ADD](context, slug) {
-    const { data } = await FavoriteService.add(slug);
-    context.commit(UPDATE_SESSION_IN_LIST, data.article, { root: true });
-    context.commit(SET_SESSION, data.article);
-  },
-  async [FAVORITE_REMOVE](context, slug) {
-    const { data } = await FavoriteService.remove(slug);
-    // Update list as well. This allows us to favorite an article in the Home view.
-    context.commit(UPDATE_SESSION_IN_LIST, data.article, { root: true });
-    context.commit(SET_SESSION, data.article);
-  },
   [SESSION_PUBLISH]({ state }) {
-    return SessionsService.create(state.article);
+    return SessionsService.create(state.session);
   },
-  [SESSION_DELETE](context, slug) {
-    return SessionsService.destroy(slug);
+  [SESSION_DELETE](context, id) {
+    return SessionsService.destroy(id);
   },
   [SESSION_EDIT]({ state }) {
-    return SessionsService.update(state.article.slug, state.article);
-  },
-  [SESSION_EDIT_ADD_TAG](context, tag) {
-    context.commit(TAG_ADD, tag);
-  },
-  [SESSION_EDIT_REMOVE_TAG](context, tag) {
-    context.commit(TAG_REMOVE, tag);
+    return SessionsService.update(state.session.id, state.session);
   },
   [SESSION_RESET_STATE]({ commit }) {
-    commit(RESET_STATE);
+    commit(RESET_SESSION_STATE);
+  },
+  [SESSION_JOIN](context, id) {
+    return SessionsService.get(id + "/join");
+  },
+  [SESSION_LEAVE](context, id) {
+    return SessionsService.get(id + "/leave");
   }
 };
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
 export const mutations = {
-  [SET_SESSION](state, article) {
-    state.article = article;
+  [SET_SESSION](state, session) {
+    state.session = session;
   },
-  [SET_COMMENTS](state, comments) {
-    state.comments = comments;
-  },
-  [TAG_ADD](state, tag) {
-    state.article.tagList = state.article.tagList.concat([tag]);
-  },
-  [TAG_REMOVE](state, tag) {
-    state.article.tagList = state.article.tagList.filter(t => t !== tag);
-  },
-  [RESET_STATE]() {
+  [RESET_SESSION_STATE]() {
     for (let f in state) {
       Vue.set(state, f, initialState[f]);
     }
@@ -104,11 +102,8 @@ export const mutations = {
 };
 
 const getters = {
-  article(state) {
-    return state.article;
-  },
-  comments(state) {
-    return state.comments;
+  session(state) {
+    return state.session;
   }
 };
 

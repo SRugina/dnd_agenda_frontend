@@ -1,18 +1,62 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="home-page">
+    <b-jumbotron
+      bg-variant="transparent"
+      fluid
+      class="home-banner"
+      text-variant="white"
+    >
+      <template v-slot:header>
+        <h1 class="text-center" style="font-weight: 600;">D&amp;Dear All</h1>
+      </template>
+
+      <template v-slot:lead>
+        <hr class="my-4" style="background-color: white;" />
+        <p class="text-center" style="font-weight: 600;">
+          A place to plan Dungeons and Dragons sessions.
+        </p>
+      </template>
+    </b-jumbotron>
+    <b-container v-if="isAuthenticated">
+      <b-row>
+        <b-col md="9">
+          <b-card title="Feed Navigation" no-body>
+            <b-card-header header-tag="nav">
+              <b-nav card-header tabs>
+                <b-nav-item
+                  :to="{ name: 'home' }"
+                  exact
+                  exact-active-class="active"
+                  >Your Feed</b-nav-item
+                >
+              </b-nav>
+            </b-card-header>
+
+            <b-card-body>
+              <router-view></router-view>
+            </b-card-body>
+          </b-card>
+        </b-col>
+        <b-col md="3">
+          <b-jumbotron
+            bg-variant="info"
+            text-variant="white"
+            lead="More features coming soon..."
+          ></b-jumbotron>
+        </b-col>
+      </b-row>
+    </b-container>
+    <b-container v-else></b-container>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "home",
-  components: {
-    HelloWorld
+  computed: {
+    ...mapGetters(["isAuthenticated"])
   }
 };
 </script>
