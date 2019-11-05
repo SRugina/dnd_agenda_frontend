@@ -20,3 +20,5 @@ export const GROUP_RESET_STATE = "resetGroupState";
 export const UPDATE_USER_PASSWORD = "updateUserPassword";
 export const SESSION_JOIN = "joinSession";
 export const SESSION_LEAVE = "leaveSession";
+export const GROUP_JOIN = "joinGroup";
+export const GROUP_LEAVE = "leaveGroup";

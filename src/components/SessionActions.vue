@@ -27,7 +27,11 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { SESSION_JOIN, SESSION_LEAVE } from "@/store/actions.type";
+import {
+  SESSION_DELETE,
+  SESSION_JOIN,
+  SESSION_LEAVE
+} from "@/store/actions.type";
 
 export default {
   name: "RwvSessionActions",
@@ -53,6 +57,14 @@ export default {
     async leaveSession() {
       try {
         await this.$store.dispatch(SESSION_LEAVE, this.session.id);
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    async deleteSession() {
+      try {
+        await this.$store.dispatch(SESSION_DELETE, this.session.id);
+        this.$router.push("/");
       } catch (err) {
         console.error(err);
       }

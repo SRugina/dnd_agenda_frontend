@@ -5,7 +5,9 @@ import {
   GROUP_PUBLISH,
   GROUP_EDIT,
   GROUP_DELETE,
-  GROUP_RESET_STATE
+  GROUP_RESET_STATE,
+  GROUP_JOIN,
+  GROUP_LEAVE
 } from "./actions.type";
 import { RESET_GROUP_STATE, SET_GROUP } from "./mutations.type";
 
@@ -44,6 +46,12 @@ export const actions = {
   },
   [GROUP_RESET_STATE]({ commit }) {
     commit(RESET_GROUP_STATE);
+  },
+  [GROUP_JOIN](context, id) {
+    return GroupsService.get(id + "/join");
+  },
+  [GROUP_LEAVE](context, id) {
+    return GroupsService.get(id + "/leave");
   }
 };
 

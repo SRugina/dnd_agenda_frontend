@@ -24,16 +24,6 @@
           mode="dark"
         ></RwvSessionMeta>
       </div>
-      <b-row>
-        <b-col cols="12" md="8" offset-md="2">
-          <p>
-            <!--v-else> -->
-            <b-link :to="{ name: 'login' }">Sign in</b-link>or
-            <b-link :to="{ name: 'register' }">sign up</b-link>to join this
-            session.
-          </p>
-        </b-col>
-      </b-row>
     </b-container>
   </div>
 </template>

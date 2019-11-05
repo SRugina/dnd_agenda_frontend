@@ -3,7 +3,11 @@
     <div class="banner">
       <b-container>
         <h1>{{ group.name }}</h1>
-        <RwvGroupMeta :group="group" :actions="true"></RwvGroupMeta>
+        <RwvGroupMeta
+          :group="group"
+          :actions="true"
+          mode="light"
+        ></RwvGroupMeta>
       </b-container>
     </div>
     <b-container>
@@ -14,18 +18,8 @@
       </b-row>
       <hr />
       <div class="group-actions">
-        <RwvGroupMeta :group="group" :actions="true"></RwvGroupMeta>
+        <RwvGroupMeta :group="group" :actions="true" mode="dark"></RwvGroupMeta>
       </div>
-      <b-row>
-        <b-col cols="12" md="8" offset-md="2">
-          <p>
-            <!--v-else> -->
-            <b-link :to="{ name: 'login' }">Sign in</b-link>or
-            <b-link :to="{ name: 'register' }">sign up</b-link>to join this
-            group.
-          </p>
-        </b-col>
-      </b-row>
     </b-container>
   </div>
 </template>
@@ -77,9 +71,5 @@ export default {
 .group-actions {
   text-align: center;
   margin: 1.5rem 0 3rem;
-}
-
-.session-meta .info .author {
-  color: !important;
 }
 </style>

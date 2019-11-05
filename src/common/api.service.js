@@ -102,8 +102,8 @@ export const SessionsService = {
 };
 
 export const GroupsService = {
-  query(type, params) {
-    return ApiService.query("groups" + (type === "feed" ? "/feed" : ""), {
+  query(params) {
+    return ApiService.query("groups", {
       params: params
     });
   },

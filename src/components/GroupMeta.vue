@@ -17,6 +17,7 @@
       <rwv-group-actions
         :group="group"
         :canModify="isCurrentUser()"
+        :canLeave="isUserMember()"
       ></rwv-group-actions>
     </template>
     <div style="float: right;" :class="mode + `-sub-info`">
@@ -65,6 +66,13 @@ export default {
         return this.currentUser.username === this.group.admin.username;
       }
       return false;
+    },
+    isUserMember() {
+      return this.group.members.some(user => {
+        if (this.currentUser.username && user.username) {
+          return this.currentUser.username === user.username;
+        }
+      });
     }
   }
 };
