@@ -23,7 +23,7 @@ import RwvSessionPreview from "./VSessionPreview";
 import VPagination from "./VPagination";
 import { FETCH_SESSIONS } from "../store/actions.type";
 import { DateTime } from "luxon";
-import { compareAsc, compareDesc, parseISO } from "date-fns";
+import { compareAsc, parseISO } from "date-fns";
 
 export default {
   name: "RwvSessionList",
@@ -66,6 +66,9 @@ export default {
       if (this.dm) {
         filters.dm = this.dm;
       }
+      if (this.sort) {
+        filters.order = this.sort;
+      }
       return {
         filters
       };
@@ -79,17 +82,6 @@ export default {
     ...mapGetters(["sessionsPagesCount", "isLoadingSessions", "sessions"]),
     sortedSessions() {
       let sessions = this.sessions.map(i => ({ ...i }));
-      if (this.sort) {
-        if (this.sort.toLowerCase() === "asc") {
-          sessions.sort((a, b) =>
-            compareAsc(parseISO(a.sessionDate), parseISO(b.sessionDate))
-          );
-        } else if (this.sort.toLowerCase() === "desc") {
-          sessions.sort((a, b) =>
-            compareDesc(parseISO(a.sessionDate), parseISO(b.sessionDate))
-          );
-        }
-      }
       if (this.excludePast) {
         sessions = sessions.filter(session => {
           const res = compareAsc(
@@ -117,6 +109,14 @@ export default {
       this.fetchSessions();
     },
     dm() {
+      this.resetPagination();
+      this.fetchSessions();
+    },
+    sort() {
+      this.resetPagination();
+      this.fetchSessions();
+    },
+    excludePast() {
       this.resetPagination();
       this.fetchSessions();
     }

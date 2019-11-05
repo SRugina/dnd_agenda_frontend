@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <b-container>
+    <b-container text-variant="white">
       <b-row>
         <b-link class="logo-font" :to="{ name: 'home', params: {} }"
           >DnD Agenda</b-link
