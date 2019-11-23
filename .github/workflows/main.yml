@@ -12,6 +12,6 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         privateKey: ${{ secrets.KEY }}
-        script: |
+        command: |
           cd ~
           ls -a
