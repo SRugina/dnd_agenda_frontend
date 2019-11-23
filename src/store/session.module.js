@@ -7,7 +7,9 @@ import {
   SESSION_DELETE,
   SESSION_RESET_STATE,
   SESSION_JOIN,
-  SESSION_LEAVE
+  SESSION_LEAVE,
+  CHECK_SESSION_WAITING,
+  REMOVE_FROM_SESSION
 } from "./actions.type";
 import { RESET_SESSION_STATE, SET_SESSION } from "./mutations.type";
 import { DateTime } from "luxon";
@@ -86,6 +88,24 @@ export const actions = {
   },
   [SESSION_LEAVE](context, id) {
     return SessionsService.get(id + "/leave");
+  },
+  [CHECK_SESSION_WAITING](context, payload) {
+    const { session_id, user_id } = payload;
+    // eslint-disable-next-line no-unused-vars
+    return new Promise((resolve, _reject) => {
+      SessionsService.get(`${session_id}/waiting/${user_id}`)
+        .then(({ data }) => {
+          resolve(data.waiting);
+        })
+        .catch(() => {
+          // not found, so is not waiting and is not a member
+          resolve(false);
+        });
+    });
+  },
+  [REMOVE_FROM_SESSION](context, payload) {
+    const { parent_id, user_id } = payload;
+    return SessionsService.destroy(`${parent_id}/remove/${user_id}`);
   }
 };
 

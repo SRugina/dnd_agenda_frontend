@@ -15,9 +15,10 @@ export default new Router({
           component: () => import("@/views/HomeFeed")
         },
         {
-          path: "",
-          name: "search-sessions",
-          component: () => import("@/views/SearchSessions")
+          path: "/search/:type/:slug?",
+          name: "search",
+          component: () => import("@/views/Search"),
+          props: true
         }
       ]
     },
@@ -90,6 +91,17 @@ export default new Router({
       path: "/group-admin-editor/:slug",
       props: true,
       component: () => import("@/views/GroupAdminEdit")
+    },
+    {
+      name: "notifications",
+      path: "/notifications",
+      component: () => import("@/views/Notifications")
+    },
+    {
+      name: "invite",
+      path: "/invite",
+      props: true,
+      component: () => import("@/views/Invite")
     }
   ]
 });

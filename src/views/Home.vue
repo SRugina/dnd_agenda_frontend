@@ -7,11 +7,13 @@
       text-variant="white"
     >
       <template v-slot:header>
-        <h1 class="text-center" style="font-weight: 600;">D&amp;Dear All</h1>
+        <h1 id="home-banner-h1" class="text-center" style="font-weight: 600;">
+          D&amp;Dear All
+        </h1>
       </template>
 
       <template v-slot:lead>
-        <hr class="my-4" style="background-color: white;" />
+        <br />
         <p class="text-center" style="font-weight: 600;">
           A place to plan Dungeons and Dragons sessions.
         </p>
@@ -22,12 +24,27 @@
         <b-col md="9">
           <b-card title="Feed Navigation" no-body>
             <b-card-header header-tag="nav">
-              <b-nav card-header tabs>
+              <b-nav card-header pills>
                 <b-nav-item
                   :to="{ name: 'home' }"
                   exact
                   exact-active-class="active"
                   >Your Feed</b-nav-item
+                >
+                <b-nav-item
+                  :to="{ path: '/search/session/' }"
+                  active-class="active"
+                  >Search Sessions</b-nav-item
+                >
+                <b-nav-item
+                  :to="{ path: '/search/group/' }"
+                  active-class="active"
+                  >Search Groups</b-nav-item
+                >
+                <b-nav-item
+                  :to="{ path: '/search/user/' }"
+                  active-class="active"
+                  >Search Users</b-nav-item
                 >
               </b-nav>
             </b-card-header>

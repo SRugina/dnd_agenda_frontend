@@ -4,7 +4,7 @@
       <b-row>
         <b-col md="5" offset-md="1" cols="12">
           <RwvListErrors :errors="errors" />
-          <b-form @submit.prevent="onPublish()">
+          <b-form @submit.prevent="onPublish()" autocomplete="off">
             <b-form-group :disabled="inProgress">
               <b-form-group id="input-group-1" label-for="input-1">
                 <cool-select
@@ -48,14 +48,14 @@
                   </template>
                 </cool-select>
               </b-form-group>
+              <b-button
+                :disabled="inProgress"
+                type="submit"
+                variant="primary"
+                style="float: right;"
+                >Update Admin</b-button
+              >
             </b-form-group>
-            <b-button
-              :disabled="inProgress"
-              type="submit"
-              variant="primary"
-              style="float: right;"
-              >Update Admin</b-button
-            >
           </b-form>
         </b-col>
       </b-row>
@@ -160,8 +160,8 @@ export default {
 
       this.noProfilesData = false;
       if (search.length < lettersLimit) {
-        this.$store.state.search_profiles.profiles = [];
-        this.$store.state.search_profiles.isLoadingProfiles = false;
+        this.$store.state.searchProfiles.profiles = [];
+        this.$store.state.searchProfiles.isLoadingProfiles = false;
         return;
       }
 

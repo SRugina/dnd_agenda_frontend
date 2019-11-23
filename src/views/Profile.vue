@@ -12,6 +12,13 @@
                 >Edit Profile Settings</b-button
               >
             </div>
+            <div v-else>
+              <b-button
+                variant="outline-success"
+                :to="{ name: 'invite', query: { userId: profile.id } }"
+                >Invite</b-button
+              >
+            </div>
           </b-col>
         </b-row>
       </b-container>
@@ -22,7 +29,7 @@
         <b-col md="10" offset-md="1" cols="12">
           <b-card title="Feed Navigation" no-body>
             <b-card-header header-tag="nav">
-              <b-nav card-header tabs>
+              <b-nav card-header pills>
                 <b-nav-item
                   :to="{ name: 'profile' }"
                   exact

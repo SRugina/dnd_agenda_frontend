@@ -12,18 +12,27 @@
     </div>
     <b-container>
       <b-row class="session-content">
-        <b-col cols="12" class="col-xs-12">
+        <b-col md="8">
           <div v-html="parseMarkdown(session.description)"></div>
+        </b-col>
+        <b-col md="4">
+          <div v-if="session.members.length === 0" class="profile-preview">
+            No members are here... yet.
+          </div>
+          <b-jumbotron id="members" bg-variant="white" lead="Members:">
+            <RwvProfilePreview
+              v-for="(profile, index) in session.members"
+              :profile="profile"
+              :key="profile.username + index"
+              :noBio="true"
+              :actions="isCurrentUser()"
+              actionsType="session"
+              :parentId="session.id"
+            />
+          </b-jumbotron>
         </b-col>
       </b-row>
       <hr />
-      <div class="session-actions">
-        <RwvSessionMeta
-          :session="session"
-          :actions="true"
-          mode="dark"
-        ></RwvSessionMeta>
-      </div>
     </b-container>
   </div>
 </template>
@@ -34,6 +43,7 @@ import marked from "marked";
 import { sanitize } from "dompurify";
 import store from "@/store";
 import RwvSessionMeta from "@/components/SessionMeta";
+import RwvProfilePreview from "@/components/VProfilePreview";
 import { FETCH_SESSION } from "@/store/actions.type";
 
 export default {
@@ -45,7 +55,8 @@ export default {
     }
   },
   components: {
-    RwvSessionMeta
+    RwvSessionMeta,
+    RwvProfilePreview
   },
   beforeRouteEnter(to, from, next) {
     Promise.all([store.dispatch(FETCH_SESSION, to.params.slug)]).then(() => {
@@ -58,6 +69,12 @@ export default {
   methods: {
     parseMarkdown(content) {
       return sanitize(marked(content));
+    },
+    isCurrentUser() {
+      if (this.currentUser.username && this.session.dm.username) {
+        return this.currentUser.username === this.session.dm.username;
+      }
+      return false;
     }
   }
 };
@@ -75,5 +92,9 @@ export default {
 .session-actions {
   text-align: center;
   margin: 1.5rem 0 3rem;
+}
+
+#members {
+  padding: 2rem 2rem !important;
 }
 </style>

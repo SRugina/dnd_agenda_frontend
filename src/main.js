@@ -18,6 +18,13 @@ import DateFilter from "./common/date.filter";
 import ErrorFilter from "./common/error.filter";
 
 import BootstrapVue from "bootstrap-vue";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faBell, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+library.add(faBell, faPlus);
+
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 import "./custom.scss";
 

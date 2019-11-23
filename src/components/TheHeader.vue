@@ -1,6 +1,11 @@
 <template>
-  <b-navbar toggleable="lg" type="dark" variant="secondary">
-    <b-navbar-brand :to="{ name: 'home' }">DnD Agenda</b-navbar-brand>
+  <b-navbar
+    toggleable="lg"
+    type="dark"
+    variant="secondary"
+    style="border-bottom: 4px solid #9d0a0e;"
+  >
+    <b-navbar-brand :to="{ name: 'home' }">D&amp;Dear All</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -13,26 +18,23 @@
 
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-        <b-nav-form v-if="isAuthenticated">
+        <b-nav-form v-if="isAuthenticated" @submit.prevent="search()">
           <b-form-input
             size="sm"
             class="mr-sm-2"
+            v-model="search_slug"
             :placeholder="'search for ' + search_for"
           ></b-form-input>
-          <b-button
-            variant="primary"
-            size="sm"
-            class="my-2 my-sm-0"
-            type="submit"
-            >Search</b-button
-          >
         </b-nav-form>
 
         <b-nav-item-dropdown text="Filter By" v-if="isAuthenticated" right>
-          <b-dropdown-item-button v-on:click="search_for = 'Session'"
+          <b-dropdown-item-button v-on:click="search_for = 'group'"
+            >Group</b-dropdown-item-button
+          >
+          <b-dropdown-item-button v-on:click="search_for = 'session'"
             >Session</b-dropdown-item-button
           >
-          <b-dropdown-item-button v-on:click="search_for = 'User'"
+          <b-dropdown-item-button v-on:click="search_for = 'user'"
             >User</b-dropdown-item-button
           >
         </b-nav-item-dropdown>
@@ -49,7 +51,10 @@
           >
         </b-navbar-nav>
         <b-navbar-nav v-else>
-          <b-nav-item-dropdown text="New" right>
+          <b-nav-item-dropdown right>
+            <template v-slot:button-content>
+              <font-awesome-icon :icon="['fas', 'plus']" />
+            </template>
             <b-dropdown-item
               active-class="active"
               :to="{ name: 'session-edit' }"
@@ -59,6 +64,13 @@
               >&nbsp;New Group</b-dropdown-item
             >
           </b-nav-item-dropdown>
+
+          <b-nav-item
+            exact
+            exact-active-class="active"
+            :to="{ name: 'notifications' }"
+            ><font-awesome-icon :icon="['fas', 'bell']"
+          /></b-nav-item>
 
           <b-nav-item-dropdown v-if="currentUser.username" right>
             <template v-slot:button-content>
@@ -98,7 +110,8 @@ export default {
   name: "RwvHeader",
   data() {
     return {
-      search_for: "Session"
+      search_for: "group",
+      search_slug: ""
     };
   },
   computed: {
@@ -108,6 +121,11 @@ export default {
     logout() {
       this.$store.dispatch(LOGOUT).then(() => {
         this.$router.push("/");
+      });
+    },
+    search() {
+      this.$router.push({
+        path: "/search/" + this.search_for + "/" + this.search_slug
       });
     }
   }

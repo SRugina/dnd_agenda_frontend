@@ -120,7 +120,7 @@ export const GroupsService = {
     return ApiService.post("groups", group);
   },
   update(id, params) {
-    return ApiService.update("groups", id, { group: params });
+    return ApiService.update("groups", id, params);
   },
   destroy(id) {
     return ApiService.delete(`groups/${id}`);

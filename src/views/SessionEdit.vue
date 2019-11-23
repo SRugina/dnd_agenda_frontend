@@ -4,7 +4,7 @@
       <b-row>
         <b-col md="5" offset-md="1" cols="12">
           <RwvListErrors :errors="errors" />
-          <b-form @submit.prevent="onPublish(session.slug)">
+          <b-form @submit.prevent="onPublish(session.slug)" autocomplete="off">
             <b-form-group :disabled="inProgress">
               <b-form-group id="input-group-1" label-for="input-1">
                 <b-form-input
@@ -154,41 +154,41 @@
                   </template>
                 </cool-select>
               </b-form-group>
+              <hr />
+              <b-button
+                :disabled="inProgress"
+                variant="outline-danger"
+                style="float: left; margin-right: 1em;"
+                @click="deleteSession"
+                v-if="!!session.slug"
+                >Delete Session</b-button
+              >
+              <b-button
+                :disabled="inProgress"
+                variant="outline-warning"
+                style="float: left;"
+                :to="editSessionDMLink"
+                v-if="!!session.slug"
+                >Change the DM</b-button
+              >
+              <b-button
+                :disabled="inProgress"
+                type="submit"
+                variant="primary"
+                style="float: right;"
+                size="lg"
+                v-if="!session.slug"
+                >Publish Session</b-button
+              >
+              <b-button
+                :disabled="inProgress"
+                type="submit"
+                variant="primary"
+                style="float: right;"
+                v-if="!!session.slug"
+                >Save Changes</b-button
+              >
             </b-form-group>
-            <hr />
-            <b-button
-              :disabled="inProgress"
-              variant="outline-danger"
-              style="float: left; margin-right: 1em;"
-              @click="deleteSession"
-              v-if="!!session.slug"
-              >Delete Session</b-button
-            >
-            <b-button
-              :disabled="inProgress"
-              variant="outline-warning"
-              style="float: left;"
-              :to="editSessionDMLink"
-              v-if="!!session.slug"
-              >Change the DM</b-button
-            >
-            <b-button
-              :disabled="inProgress"
-              type="submit"
-              variant="primary"
-              style="float: right;"
-              size="lg"
-              v-if="!session.slug"
-              >Publish Session</b-button
-            >
-            <b-button
-              :disabled="inProgress"
-              type="submit"
-              variant="primary"
-              style="float: right;"
-              v-if="!!session.slug"
-              >Save Changes</b-button
-            >
           </b-form>
         </b-col>
         <b-col md="5" offset-md="1" cols="12">
@@ -328,8 +328,8 @@ export default {
 
       this.noProfilesData = false;
       if (search.length < lettersLimit) {
-        this.$store.state.search_profiles.profiles = [];
-        this.$store.state.search_profiles.isLoadingProfiles = false;
+        this.$store.state.searchProfiles.profiles = [];
+        this.$store.state.searchProfiles.isLoadingProfiles = false;
         return;
       }
 
@@ -343,8 +343,8 @@ export default {
 
       this.noGroupsData = false;
       if (search.length < lettersLimit) {
-        this.$store.state.search_groups.groups = [];
-        this.$store.state.search_groups.isLoadingGroups = false;
+        this.$store.state.searchGroups.groups = [];
+        this.$store.state.searchGroups.isLoadingGroups = false;
         return;
       }
 
@@ -365,7 +365,11 @@ export default {
         await this.$store.dispatch(SESSION_DELETE, this.session.id);
         this.$router.push("/");
       } catch (err) {
-        console.error(err);
+        this.$bvToast.toast(`${err}`, {
+          title: "Error",
+          autoHideDelay: 5000,
+          variant: "danger"
+        });
       }
     }
   }

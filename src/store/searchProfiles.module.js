@@ -38,9 +38,9 @@ const mutations = {
   [FETCH_PROFILES_START](state) {
     state.isLoadingProfiles = true;
   },
-  [FETCH_PROFILES_END](state, { users, usersCount }) {
+  [FETCH_PROFILES_END](state, { users, usersPagesCount }) {
     state.profiles = users;
-    state.profilesPagesCount = usersCount;
+    state.profilesPagesCount = usersPagesCount;
     state.isLoadingProfiles = false;
   }
 };

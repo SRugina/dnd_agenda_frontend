@@ -7,7 +7,9 @@ import {
   GROUP_DELETE,
   GROUP_RESET_STATE,
   GROUP_JOIN,
-  GROUP_LEAVE
+  GROUP_LEAVE,
+  CHECK_GROUP_WAITING,
+  REMOVE_FROM_GROUP
 } from "./actions.type";
 import { RESET_GROUP_STATE, SET_GROUP } from "./mutations.type";
 
@@ -48,10 +50,28 @@ export const actions = {
     commit(RESET_GROUP_STATE);
   },
   [GROUP_JOIN](context, id) {
-    return GroupsService.get(id + "/join");
+    return GroupsService.get(`${id}/join`);
   },
   [GROUP_LEAVE](context, id) {
-    return GroupsService.get(id + "/leave");
+    return GroupsService.destroy(`${id}/leave`);
+  },
+  [CHECK_GROUP_WAITING](context, payload) {
+    const { group_id, user_id } = payload;
+    // eslint-disable-next-line no-unused-vars
+    return new Promise((resolve, _reject) => {
+      GroupsService.get(`${group_id}/waiting/${user_id}`)
+        .then(({ data }) => {
+          resolve(data.waiting);
+        })
+        .catch(() => {
+          // not found, so is not waiting and is not a member
+          resolve(false);
+        });
+    });
+  },
+  [REMOVE_FROM_GROUP](context, payload) {
+    const { parent_id, user_id } = payload;
+    return GroupsService.destroy(`${parent_id}/remove/${user_id}`);
   }
 };
 

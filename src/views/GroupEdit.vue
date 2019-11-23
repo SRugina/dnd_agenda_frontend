@@ -4,7 +4,7 @@
       <b-row>
         <b-col md="5" offset-md="1" cols="12">
           <RwvListErrors :errors="errors" />
-          <b-form @submit.prevent="onPublish(group.slug)">
+          <b-form @submit.prevent="onPublish(group.slug)" autocomplete="off">
             <b-form-group :disabled="inProgress">
               <b-form-group id="input-group-1" label-for="input-1">
                 <b-form-input
@@ -56,7 +56,7 @@
                   </template>
                   <template #item="{ item }">
                     <div class="item">
-                      <img :src="search_img(item.image)" class="user-img" />
+                      <img :src="item.image" class="user-img" />
 
                       <div>
                         <span class="item-username">{{ item.username }}</span>
@@ -72,42 +72,42 @@
                   </template>
                 </cool-select>
               </b-form-group>
+              <b-button
+                :disabled="inProgress"
+                type="submit"
+                variant="outline-danger"
+                style="float: left; margin-right: 1em;"
+                @click="deleteGroup"
+                v-if="!!group.slug"
+                >Delete Group</b-button
+              >
+              <b-button
+                :disabled="inProgress"
+                type="submit"
+                variant="outline-warning"
+                style="float: left;"
+                :to="editGroupAdminLink"
+                v-if="!!group.slug"
+                >Change the Admin</b-button
+              >
+              <b-button
+                :disabled="inProgress"
+                type="submit"
+                variant="primary"
+                size="lg"
+                style="float: right;"
+                v-if="!group.slug"
+                >Publish Group</b-button
+              >
+              <b-button
+                :disabled="inProgress"
+                type="submit"
+                variant="primary"
+                style="float: right;"
+                v-if="!!group.slug"
+                >Save Changes</b-button
+              >
             </b-form-group>
-            <b-button
-              :disabled="inProgress"
-              type="submit"
-              variant="outline-danger"
-              style="float: left; margin-right: 1em;"
-              @click="deleteGroup"
-              v-if="!!group.slug"
-              >Delete Group</b-button
-            >
-            <b-button
-              :disabled="inProgress"
-              type="submit"
-              variant="outline-warning"
-              style="float: left;"
-              :to="editGroupAdminLink"
-              v-if="!!group.slug"
-              >Change the Admin</b-button
-            >
-            <b-button
-              :disabled="inProgress"
-              type="submit"
-              variant="primary"
-              size="lg"
-              style="float: right;"
-              v-if="!group.slug"
-              >Publish Group</b-button
-            >
-            <b-button
-              :disabled="inProgress"
-              type="submit"
-              variant="primary"
-              style="float: right;"
-              v-if="!!group.slug"
-              >Save Changes</b-button
-            >
           </b-form>
         </b-col>
         <b-col md="5" offset-md="1" cols="12">
@@ -231,8 +231,8 @@ export default {
 
       this.noProfilesData = false;
       if (search.length < lettersLimit) {
-        this.$store.state.search_profiles.profiles = [];
-        this.$store.state.search_profiles.isLoadingProfiles = false;
+        this.$store.state.searchProfiles.profiles = [];
+        this.$store.state.searchProfiles.isLoadingProfiles = false;
         return;
       }
 
@@ -241,19 +241,16 @@ export default {
 
       if (!this.profiles.length) this.noProfilesData = true;
     },
-    search_img(item_image) {
-      if (item_image) {
-        return item_image;
-      } else {
-        return "https://i.ibb.co/F7gn5W9/smiley.jpg";
-      }
-    },
     async deleteGroup() {
       try {
         await this.$store.dispatch(GROUP_DELETE, this.group.id);
         this.$router.push("/");
       } catch (err) {
-        console.error(err);
+        this.$bvToast.toast(`${err}`, {
+          title: "Error",
+          autoHideDelay: 5000,
+          variant: "danger"
+        });
       }
     }
   }

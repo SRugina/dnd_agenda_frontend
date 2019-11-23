@@ -1,11 +1,7 @@
 <template v-show="errors">
-  <ul class="error-messages">
-    <li v-for="(value, key) in errors" :key="key">
-      <span v-text="key" />
-      <br />
-      <span v-for="err in value" :key="err" v-text="err" />
-    </li>
-  </ul>
+  <div class="error-messages">
+    {{ showErrors }}
+  </div>
 </template>
 
 <script>
@@ -13,6 +9,18 @@ export default {
   name: "RwvListErorrs",
   props: {
     errors: { type: Object, required: true }
+  },
+  computed: {
+    showErrors() {
+      for (let key in this.errors) {
+        this.$bvToast.toast(`${this.errors[key][0]}`, {
+          title: `${key}`,
+          autoHideDelay: 5000,
+          variant: "danger"
+        });
+      }
+      return null;
+    }
   }
 };
 </script>

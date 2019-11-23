@@ -32,6 +32,10 @@ export default {
     VPagination
   },
   props: {
+    title: {
+      type: String,
+      required: false
+    },
     dm: {
       type: String,
       required: false
@@ -63,6 +67,9 @@ export default {
         page: this.currentPage,
         limit: this.itemsPerPage
       };
+      if (this.title) {
+        filters.title = this.title;
+      }
       if (this.dm) {
         filters.dm = this.dm;
       }
@@ -106,6 +113,10 @@ export default {
   watch: {
     currentPage(newValue) {
       this.listConfig.filters.page = newValue;
+      this.fetchSessions();
+    },
+    title() {
+      this.resetPagination();
       this.fetchSessions();
     },
     dm() {

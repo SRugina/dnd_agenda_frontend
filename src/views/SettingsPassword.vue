@@ -5,8 +5,8 @@
         <b-col md="6" offset-md="3" cols="12">
           <h1 class="text-center">Change Password</h1>
           <RwvListErrors :errors="errors" />
-          <b-form @submit.prevent="updateSettings()">
-            <b-form-group>
+          <b-form @submit.prevent="updateSettings()" autocomplete="off">
+            <b-form-group :disabled="inProgress">
               <b-form-group id="input-group-1" label-for="input-1">
                 <b-form-input
                   id="input-1"
@@ -63,8 +63,11 @@ export default {
         .dispatch(UPDATE_USER_PASSWORD, { oldPassword, password })
         .then(() => {
           this.inProgress = false;
-          // #todo, nice toast and no redirect
-          this.$router.push({ name: "home" });
+          this.$bvToast.toast("Password Updated", {
+            title: "Success",
+            autoHideDelay: 5000,
+            variant: "success"
+          });
         })
         .catch(({ response }) => {
           this.inProgress = false;

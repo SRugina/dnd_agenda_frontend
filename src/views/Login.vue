@@ -7,9 +7,9 @@
           <p class="text-center">
             <b-link :to="{ name: 'register' }">Need an account?</b-link>
           </p>
-          <ul v-if="errors" class="error-messages">
-            <li>{{ errors }}</li>
-          </ul>
+          <div v-if="errors" class="error-messages">
+            {{ showErrors }}
+          </div>
           <b-form @submit.prevent="onSubmit(email, password)">
             <b-form-group id="input-group-1" label-for="input-1">
               <b-form-input
@@ -67,7 +67,15 @@ export default {
   computed: {
     ...mapState({
       errors: state => state.auth.errors
-    })
+    }),
+    showErrors() {
+      this.$bvToast.toast(`${this.errors}`, {
+        title: "Error",
+        autoHideDelay: 5000,
+        variant: "danger"
+      });
+      return null;
+    }
   }
 };
 </script>
