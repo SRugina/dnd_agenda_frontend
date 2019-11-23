@@ -6,15 +6,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: test
-      run: echo ${{ secrets.HOST }}
     - name: Deploy
-      uses: appleboy/ssh-action@v0.0.2
+      uses: garygrossgarten/github-action-ssh@v0.3.0
       with:
-        host: "35.178.167.76"
+        host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
+        privateKey: ${{ secrets.KEY }}
         script: |
           cd ~
           ls -a
