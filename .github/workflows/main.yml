@@ -6,6 +6,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: test
+      run: echo ${{ secrets.HOST }}
     - name: Deploy
       uses: appleboy/ssh-action@v0.0.2
       with:
