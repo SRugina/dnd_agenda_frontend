@@ -6,12 +6,34 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Deploy
-      uses: garygrossgarten/github-action-ssh@v0.3.0
+    - uses: actions/checkout@v1
+
+    - name: check version
+      run: node --version && yarn --version
+
+    - name: Get yarn cache
+      id: yarn-cache
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+
+    - uses: actions/cache@v1
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        privateKey: ${{ secrets.KEY }}
-        command: |
-          cd ~
-          ls -a
+        path: ${{ steps.yarn-cache.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
+    - name: Install Yarn dependencies
+      run: yarn install
+
+    - name: Build
+      run: yarn run build
+
+    - name: Deploy
+      uses: easingthemes/ssh-deploy@v2.0.2
+      env:
+          SSH_PRIVATE_KEY: ${{ secrets.KEY }}
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: "dist/"
+          REMOTE_HOST: ${{ secrets.HOST }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: ${{ secrets.TARGET }}
