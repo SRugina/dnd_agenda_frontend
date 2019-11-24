@@ -29,11 +29,12 @@ jobs:
       run: yarn run build
 
     - name: Deploy
-      uses: easingthemes/ssh-deploy@master
+      uses: AEnterprise/rsync-deploy@v1.0
       env:
-          SSH_PRIVATE_KEY: ${{ secrets.KEY }}
-          ARGS: "-rltgoDzvO --delete"
-          SOURCE: "dist/"
-          REMOTE_HOST: ${{ secrets.HOST }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: ${{ secrets.TARGET }}
+        DEPLOY_KEY: ${{ secrets.KEY }}
+        ARGS: "-rltgoDzvO --delete"
+        SERVER_PORT: 22
+        FOLDER: "dist"
+        SERVER_IP: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        SERVER_DESTINATION: ${{ secrets.TARGET }}
