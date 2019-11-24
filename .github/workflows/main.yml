@@ -29,12 +29,10 @@ jobs:
       run: yarn run build
 
     - name: Deploy
-      uses: AEnterprise/rsync-deploy@v1.0
-      env:
-        DEPLOY_KEY: ${{ secrets.KEY }}
-        ARGS: "-rltgoDzvO --delete"
-        SERVER_PORT: 22
-        FOLDER: "dist"
-        SERVER_IP: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        SERVER_DESTINATION: ${{ secrets.TARGET }}
+      run: |
+        SSHPATH="$HOME/.ssh"
+        mkdir "$SSHPATH"
+        echo ${{ secrets.KEY }} > "$SSHPATH/key"
+        chmod 600 "$SSHPATH/key"
+        SERVER_DEPLOY_STRING="${{ secrets.USERNAME }}@${{ secrets.HOST }}:${{ secrets.TARGET }}"
+        sh -c "rsync -rltgoDzvO --delete -e 'ssh -i $SSHPATH/key -o StrictHostKeyChecking=no -p 22' $GITHUB_WORKSPACE/dist/ $SERVER_DEPLOY_STRING"
