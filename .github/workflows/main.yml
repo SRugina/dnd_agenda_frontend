@@ -8,15 +8,11 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: ssh file
+    - name: Deploy
       run: |
         SSHPATH="$HOME/.ssh"
         mkdir "$SSHPATH"
         echo ${{ secrets.KEY }} > "$SSHPATH/key"
         chmod 600 "$SSHPATH/key"
-        cat $SSHPATH/key
-
-    - name: Deploy
-      run: |
         SERVER_DEPLOY_STRING="${{ secrets.USERNAME }}@${{ secrets.HOST }}:${{ secrets.TARGET }}"
         sh -c "rsync -rltgoDzvO --delete -e 'ssh -i $SSHPATH/key -o StrictHostKeyChecking=no -p 22' $GITHUB_WORKSPACE/ $SERVER_DEPLOY_STRING"
