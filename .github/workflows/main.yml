@@ -8,9 +8,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: check version
-      run: node --version && yarn --version
-
     - name: Get yarn cache
       id: yarn-cache
       run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -33,6 +30,5 @@ jobs:
         mkdir "$SSHPATH"
         echo "${{ secrets.KEY }}" > "$SSHPATH/key"
         chmod 600 "$SSHPATH/key"
-        cat $SSHPATH/key
-        SERVER_DEPLOY_STRING="ubuntu@3.8.119.144:/home/ubuntu/dndearall"
+        SERVER_DEPLOY_STRING="${{ secrets.USERNAME }}@${{ secrets.HOST }}:${{ secrets.TARGET }}"
         sh -c "rsync -rltgoDzvO --delete -e 'ssh -i $SSHPATH/key -o StrictHostKeyChecking=no -p 22' $GITHUB_WORKSPACE/dist/ $SERVER_DEPLOY_STRING"
