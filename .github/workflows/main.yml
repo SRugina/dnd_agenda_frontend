@@ -12,7 +12,7 @@ jobs:
       run: |
         SSHPATH="$HOME/.ssh"
         mkdir "$SSHPATH"
-        echo ${{ secrets.SINGLE_LINE_KEY }} > "$SSHPATH/key"
+        echo ${{ secrets.KEY }} > "$SSHPATH/key"
         chmod 600 "$SSHPATH/key"
         cat $SSHPATH/key
         SERVER_DEPLOY_STRING="ubuntu@3.8.119.144:/home/ubuntu/dndearall"
