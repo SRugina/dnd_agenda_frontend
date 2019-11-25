@@ -18,4 +18,4 @@ jobs:
     - name: Deploy
       run: |
         SERVER_DEPLOY_STRING="${{ secrets.USERNAME }}@${{ secrets.HOST }}:${{ secrets.TARGET }}"
-        sh -c "rsync -rltgoDzvO --delete -e 'ssh -i $SSHPATH/key -o StrictHostKeyChecking=no -p 22' $GITHUB_WORKSPACE/dist/ $SERVER_DEPLOY_STRING"
+        sh -c "rsync -rltgoDzvO --delete -e 'ssh -i $SSHPATH/key -o StrictHostKeyChecking=no -p 22' $GITHUB_WORKSPACE/ $SERVER_DEPLOY_STRING"
