@@ -14,5 +14,5 @@ jobs:
         mkdir "$SSHPATH"
         echo ${{ secrets.KEY }} > "$SSHPATH/key"
         chmod 600 "$SSHPATH/key"
-        SERVER_DEPLOY_STRING="ubuntu@$3.8.119.144:/home/ubuntu/dndearall"
+        SERVER_DEPLOY_STRING="ubuntu@3.8.119.144:/home/ubuntu/dndearall"
         sh -c "rsync -rltgoDzvO --delete -e 'ssh -i $SSHPATH/key -o StrictHostKeyChecking=no -p 22' $GITHUB_WORKSPACE/ $SERVER_DEPLOY_STRING"
