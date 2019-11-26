@@ -8,7 +8,7 @@
     >
       <template v-slot:header>
         <h1 id="home-banner-h1" class="text-center" style="font-weight: 600;">
-          D&amp;Dear Al {{ process.env.API_URL }}
+          D&amp;Dear Al
         </h1>
       </template>
 
