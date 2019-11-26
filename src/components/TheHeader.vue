@@ -5,7 +5,9 @@
     variant="secondary"
     style="border-bottom: 4px solid #9d0a0e;"
   >
-    <b-navbar-brand :to="{ name: 'home' }">D&amp;Dear All</b-navbar-brand>
+    <b-navbar-brand :to="{ name: 'home' }">
+      <img src="https://dndearall.com/img/d20-icon.png" style="height: 2rem;" />
+    </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -69,8 +71,9 @@
             exact
             exact-active-class="active"
             :to="{ name: 'notifications' }"
-            ><font-awesome-icon :icon="['fas', 'bell']"
-          /></b-nav-item>
+          >
+            <font-awesome-icon :icon="['fas', 'bell']" />
+          </b-nav-item>
 
           <b-nav-item-dropdown v-if="currentUser.username" right>
             <template v-slot:button-content>
