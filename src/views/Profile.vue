@@ -15,7 +15,10 @@
             <div v-else>
               <b-button
                 variant="outline-success"
-                :to="{ name: 'invite', query: { userId: profile.id } }"
+                :to="{
+                  name: 'invite',
+                  query: { userId: profile.id, username: profile.name }
+                }"
                 >Invite</b-button
               >
             </div>
