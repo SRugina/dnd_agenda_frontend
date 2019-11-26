@@ -8,7 +8,7 @@
     >
       <template v-slot:header>
         <h1 id="home-banner-h1" class="text-center" style="font-weight: 600;">
-          D&amp;Dear Al
+          D&amp;Dear All {{ process.env.VUE_APP_API_URL }}
         </h1>
       </template>
 
