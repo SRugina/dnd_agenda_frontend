@@ -35,7 +35,7 @@ const mutations = {
   [SET_PROFILE](state, profile) {
     state.profile = profile;
     if (!state.profile.image) {
-      state.profile.image = "https://i.ibb.co/F7gn5W9/smiley.jpg";
+      state.profile.image = "https://dndearall.com/img/smiley.jpg";
     }
     state.errors = {};
   }

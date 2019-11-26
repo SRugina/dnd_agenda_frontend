@@ -357,7 +357,7 @@ export default {
       if (item_image) {
         return item_image;
       } else {
-        return "https://i.ibb.co/F7gn5W9/smiley.jpg";
+        return "https://dndearall.com/img/smiley.jpg";
       }
     },
     async deleteSession() {
