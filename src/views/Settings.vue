@@ -31,6 +31,7 @@
                     v-model="currentUser.bio"
                     placeholder="Short bio about you"
                     size="lg"
+                    maxlength="150"
                   ></b-form-textarea>
                 </b-form-group>
                 <b-form-group id="input-group-4" label-for="input-4">

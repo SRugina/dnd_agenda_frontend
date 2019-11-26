@@ -11,7 +11,7 @@
       :to="{ name: 'profile', params: { username: profile.username } }"
       class="preview-link"
     >
-      <h2 v-text="profile.bio" />
+      <p v-text="profile.bio" />
       <span>Find out more...</span>
     </b-link>
     <span v-if="actions">
