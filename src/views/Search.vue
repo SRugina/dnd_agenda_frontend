@@ -2,7 +2,7 @@
   <div class="search">
     <RwvSessionList v-if="type === 'session'" :title="slug" />
     <RwvGroupList globalSearch v-else-if="type === 'group'" :name="slug" />
-    <RwvProfileList globalSearch v-else-if="type == 'user'" :name="slug" />
+    <RwvProfileList globalSearch v-else-if="type == 'user'" :username="slug" />
     <span v-else></span>
   </div>
 </template>
