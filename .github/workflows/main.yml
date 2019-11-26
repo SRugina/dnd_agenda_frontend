@@ -26,9 +26,6 @@ jobs:
     - name: Install Yarn dependencies
       if: steps.cache.outputs.cache-hit != 'true'
       run: yarn install
-    
-    - name: Setup .env
-      run: echo "VUE_APP_API_URL=https://api.dndearall.com" > $GITHUB_WORKSPACE/.env
 
     - name: Build
       run: yarn run build
@@ -40,4 +37,4 @@ jobs:
         echo "${{ secrets.KEY }}" > "$SSHPATH/key"
         chmod 600 "$SSHPATH/key"
         SERVER_DEPLOY_STRING="${{ secrets.USERNAME }}@${{ secrets.HOST }}:${{ secrets.TARGET }}"
-        sh -c "rsync -rltgoDzvO --delete -e 'ssh -i $SSHPATH/key -o StrictHostKeyChecking=no -p 22' $GITHUB_WORKSPACE/dist/ $GITHUB_WORKSPACE/.env $SERVER_DEPLOY_STRING"
+        sh -c "rsync -rltgoDzvO --delete -e 'ssh -i $SSHPATH/key -o StrictHostKeyChecking=no -p 22' $GITHUB_WORKSPACE/dist/ $SERVER_DEPLOY_STRING"
