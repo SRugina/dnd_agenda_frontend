@@ -1,6 +1,6 @@
 {
-  "name": "dnd_agenda_frontend",
-  "short_name": "dnd_agenda_frontend",
+  "name": "D&Dear All",
+  "short_name": "D&Dear All",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
@@ -13,8 +13,8 @@
       "type": "image/png"
     }
   ],
+  "theme_color": "#e51e25",
+  "background_color": "#e51e25",
   "start_url": "./index.html",
-  "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#4DBA87"
+  "display": "standalone"
 }
