@@ -19,7 +19,11 @@
       size="sm"
       :to="{
         name: 'invite',
-        query: { parentName: group.name, parentType: 'group' }
+        query: {
+          parentName: group.name,
+          parentType: 'group',
+          parentId: group.id
+        }
       }"
       >Invite</b-button
     >
