@@ -19,16 +19,8 @@ jobs:
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-yarn-
-    
-    - name: Cache cross-env
-      id: cross-env-cache
-      uses: actions/cache@v1
-      with:
-        path: $GITHUB_WORKSPACE/node_modules/.bin/cross-env
-        key: ${{ runner.os }}-cross-env-${{ hashFiles('node_modules/.bin/cross-env') }}
 
     - name: Install cross-env
-      if: steps.cross-env-cache.outputs.cache-hit != 'true'
       run: yarn add cross-env --dev
 
     - name: Install Yarn dependencies
