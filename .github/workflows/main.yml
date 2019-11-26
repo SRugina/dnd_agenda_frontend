@@ -26,6 +26,9 @@ jobs:
     - name: Install Yarn dependencies
       if: steps.cache.outputs.cache-hit != 'true'
       run: yarn install
+    
+    - name: Setup .env
+      run: echo "API_URL='https://api.dndearall.com'" > $GITHUB_WORKSPACE/.env
 
     - name: Build
       run: yarn run build
