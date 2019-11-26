@@ -21,6 +21,7 @@ jobs:
           ${{ runner.os }}-yarn-
 
     - name: Install cross-env
+      if: steps.cache.outputs.cache-hit != 'true'
       run: yarn add cross-env --dev
 
     - name: Install Yarn dependencies
