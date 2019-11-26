@@ -25,7 +25,7 @@ jobs:
       uses: actions/cache@v1
       with:
         path: $GITHUB_WORKSPACE/node_modules/.bin/cross-env
-        key: ${{ runner.os }}-cross-env-${{ hashFiles('$GITHUB_WORKSPACE/node_modules/.bin/cross-env') }}
+        key: ${{ runner.os }}-cross-env-${{ hashFiles('node_modules/.bin/cross-env') }}
 
     - name: Install cross-env
       if: steps.cross-env-cache.outputs.cache-hit != 'true'
