@@ -19,9 +19,16 @@ jobs:
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-yarn-
+    
+    - name: Cache cross-env
+      id: cross-env-cache
+      uses: actions/cache@v1
+      with:
+        path: $GITHUB_WORKSPACE/node_modules/.bin/cross-env
+        key: ${{ runner.os }}-cross-env-${{ hashFiles('$GITHUB_WORKSPACE/node_modules/.bin/cross-env') }}
 
     - name: Install cross-env
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.cross-env-cache.outputs.cache-hit != 'true'
       run: yarn add cross-env --dev
 
     - name: Install Yarn dependencies
@@ -41,4 +48,4 @@ jobs:
         echo "${{ secrets.KEY }}" > "$SSHPATH/key"
         chmod 600 "$SSHPATH/key"
         SERVER_DEPLOY_STRING="${{ secrets.USERNAME }}@${{ secrets.HOST }}:${{ secrets.TARGET }}"
-        sh -c "rsync -rltgoDzvO --delete -e 'ssh -i $SSHPATH/key -o StrictHostKeyChecking=no -p 22' $GITHUB_WORKSPACE/dist/ $SERVER_DEPLOY_STRING"
+        sh -c "rsync -rltgoDzvO --delete -e 'ssh -i $SSHPATH/key -o StrictHostKeyChecking=no -p 22' $GITHUB_WORKSPACE/dist/ $GITHUB_WORKSPACE/.env $SERVER_DEPLOY_STRING"
