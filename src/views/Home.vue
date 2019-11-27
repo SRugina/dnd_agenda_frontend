@@ -15,7 +15,7 @@
       <template v-slot:lead>
         <br />
         <p class="text-center" style="font-weight: 600;">
-          A place to plan Dungeons and Dragons sessions.
+          The place to plan Dungeons and Dragons sessions
         </p>
       </template>
     </b-jumbotron>
