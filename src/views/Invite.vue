@@ -6,9 +6,8 @@
         <b-col md="6" offset-md="3">
           <b-form @submit.prevent="invite" autocomplete="off">
             <b-form-group :disabled="inProgress">
-              <b-form-group id="input-group-1" label-for="input-1">
+              <b-form-group id="input-group-1" label-for="input-1" v-if="!$route.query.userId">
                 <cool-select
-                  v-if="!$route.query.userId"
                   v-model="userId"
                   :items="profiles"
                   :loading="isLoadingProfiles"
@@ -49,9 +48,13 @@
                   </template>
                 </cool-select>
               </b-form-group>
+              <div v-else>
+                Invite
+                <h3>{{ username }}</h3>
+              </div>
               <b-form-group>
                 <b-form-radio-group
-                  v-if="!$route.query.userId && !$route.query.parentType"
+                  v-if="!$route.query.parentId && !$route.query.parentType"
                   id="btn-radios-2"
                   v-model="parentType"
                   :options="parentTypeOptions"
