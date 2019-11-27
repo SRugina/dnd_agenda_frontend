@@ -17,7 +17,7 @@
                 variant="outline-success"
                 :to="{
                   name: 'invite',
-                  query: { userId: profile.id, username: profile.name }
+                  query: { userId: profile.id, username: profile.username }
                 }"
                 >Invite</b-button
               >
