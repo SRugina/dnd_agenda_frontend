@@ -1,5 +1,5 @@
 <template>
-  <div class="session-request-preview">
+  <div class="object-preview">
     <div style="float: left;">
       <RwvProfileMeta
         isPreview
@@ -11,7 +11,7 @@
         <p v-text="'to ' + sessionRequest.title" />
       </b-link>
     </div>
-    <div class="session-request-actions" style="float: right;">
+    <div class="actions" style="float: right;">
       <b-button
         variant="outline-success"
         size="sm"
@@ -83,13 +83,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.session-request-preview {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 1.5rem 0;
-}
-.preview-link {
-  color: inherit !important;
-}
-</style>

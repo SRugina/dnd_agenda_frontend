@@ -6,7 +6,11 @@
         <b-col md="6" offset-md="3">
           <b-form @submit.prevent="invite" autocomplete="off">
             <b-form-group :disabled="inProgress">
-              <b-form-group id="input-group-1" label-for="input-1" v-if="!$route.query.userId">
+              <b-form-group
+                id="input-group-1"
+                label-for="input-1"
+                v-if="!$route.query.userId"
+              >
                 <cool-select
                   v-model="userId"
                   :items="profiles"

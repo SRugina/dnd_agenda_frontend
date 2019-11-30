@@ -79,22 +79,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.banner {
-  padding: 2rem 0;
-  color: #fff;
-  background: #333;
-  padding: 2rem;
-  margin-bottom: 2rem;
-}
-
-.session-actions {
-  text-align: center;
-  margin: 1.5rem 0 3rem;
-}
-
-#members {
-  padding: 2rem 2rem !important;
-}
-</style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="group-preview">
+  <div class="object-preview">
     <RwvGroupMeta isPreview :group="group" mode="dark" />
     <b-link :to="groupLink" class="preview-link">
       <h2 v-text="group.name" />
@@ -31,13 +31,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.group-preview {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 1.5rem 0;
-}
-.preview-link {
-  color: inherit !important;
-}
-</style>

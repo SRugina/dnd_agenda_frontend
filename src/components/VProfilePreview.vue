@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!removed" class="profile-preview">
+  <div v-if="!removed" class="object-preview">
     <RwvProfileMeta
       isPreview
       :profile="profile"
@@ -75,13 +75,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.profile-preview {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 1.5rem 0;
-}
-.preview-link {
-  color: inherit !important;
-}
-</style>

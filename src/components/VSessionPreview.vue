@@ -1,5 +1,5 @@
 <template>
-  <div class="session-preview">
+  <div class="object-preview">
     <RwvSessionMeta isPreview :session="session" mode="dark" />
     <b-link :to="sessionLink" class="preview-link">
       <h2 v-text="session.title" />
@@ -31,13 +31,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.session-preview {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 1.5rem 0;
-}
-.preview-link {
-  color: inherit !important;
-}
-</style>

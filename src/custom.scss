@@ -169,6 +169,35 @@ h6 {
   border-radius: 0rem !important;
 }
 
+.object-preview {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1.5rem 0;
+}
+.preview-link {
+  color: inherit !important;
+}
+
+.banner {
+  color: #fff;
+  background: #333;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.actions {
+  text-align: center;
+  margin: 1.5rem 0 3rem;
+}
+
+#members {
+  padding: 2rem 2rem !important;
+}
+
+.loading-indicator {
+  width: 20px;
+  margin-right: 10px;
+}
+
 $primary: #9d0a0e;
 
 $font-family-sans-serif: "Open Sans", sans-serif;

@@ -180,10 +180,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.loading-indicator {
-  width: 20px;
-  margin-right: 10px;
-}
-</style>
