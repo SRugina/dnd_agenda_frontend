@@ -1,4 +1,4 @@
-const workbox = import("workbox");
+/* eslint-disable no-undef */
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
