@@ -40,3 +40,5 @@ export const ACCEPT_TO_JOIN_GROUP = "AcceptToJoinGroup";
 export const DENY_TO_JOIN_GROUP = "DenyToJoinGroup";
 export const ACCEPT_TO_JOIN_SESSION = "AcceptToJoinSession";
 export const DENY_TO_JOIN_SESSION = "DenyToJoinSession";
+export const CHECK_GROUP_INVITED = "checkGroupInvited";
+export const CHECK_SESSION_INVITED = "checkSessionInvited";

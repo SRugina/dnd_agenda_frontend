@@ -9,7 +9,8 @@ import {
   SESSION_JOIN,
   SESSION_LEAVE,
   CHECK_SESSION_WAITING,
-  REMOVE_FROM_SESSION
+  REMOVE_FROM_SESSION,
+  CHECK_SESSION_INVITED
 } from "./actions.type";
 import { RESET_SESSION_STATE, SET_SESSION } from "./mutations.type";
 import { DateTime } from "luxon";
@@ -99,6 +100,20 @@ export const actions = {
         })
         .catch(() => {
           // not found, so is not waiting and is not a member
+          resolve(false);
+        });
+    });
+  },
+  [CHECK_SESSION_INVITED](context, payload) {
+    const { session_id, user_id } = payload;
+    // eslint-disable-next-line no-unused-vars
+    return new Promise((resolve, _reject) => {
+      SessionsService.get(`${session_id}/invited/${user_id}`)
+        .then(({ data }) => {
+          resolve(data.invited);
+        })
+        .catch(() => {
+          // not found, so is not invited and is not a member
           resolve(false);
         });
     });

@@ -22,6 +22,7 @@
         :canModify="isCurrentUser()"
         :canLeave="isUserMember()"
         :canJoin="isUserNotWaiting"
+        :invited="invited"
       ></rwv-session-actions>
     </template>
     <div style="float: right;" :class="mode + `-sub-info`">
@@ -40,7 +41,10 @@
 <script>
 import { mapGetters } from "vuex";
 import RwvSessionActions from "@/components/SessionActions";
-import { CHECK_SESSION_WAITING } from "@/store/actions.type";
+import {
+  CHECK_SESSION_WAITING,
+  CHECK_SESSION_INVITED
+} from "@/store/actions.type";
 
 export default {
   name: "RwvSessionMeta",
@@ -64,7 +68,8 @@ export default {
   },
   data() {
     return {
-      isUserNotWaiting: false
+      isUserNotWaiting: false,
+      invited: false
     };
   },
   computed: {
@@ -91,7 +96,13 @@ export default {
       user_id: this.currentUser.id
     });
 
-    this.isUserNotWaiting = !isWaitingToJoin;
+    const isInvitedToJoin = await this.$store.dispatch(CHECK_SESSION_INVITED, {
+      session_id: this.session.id,
+      user_id: this.currentUser.id
+    });
+
+    this.isUserNotWaiting = !(isWaitingToJoin || isInvitedToJoin);
+    this.invited = isInvitedToJoin;
   }
 };
 </script>

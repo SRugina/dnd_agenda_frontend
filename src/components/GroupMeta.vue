@@ -19,6 +19,7 @@
         :canModify="isCurrentUser()"
         :canLeave="isUserMember()"
         :canJoin="isUserNotWaiting"
+        :invited="invited"
       ></rwv-group-actions>
     </template>
     <div style="float: right;" :class="mode + `-sub-info`">
@@ -37,7 +38,7 @@
 <script>
 import { mapGetters } from "vuex";
 import RwvGroupActions from "@/components/GroupActions";
-import { CHECK_GROUP_WAITING } from "@/store/actions.type";
+import { CHECK_GROUP_WAITING, CHECK_GROUP_INVITED } from "@/store/actions.type";
 
 export default {
   name: "RwvGroupMeta",
@@ -61,7 +62,8 @@ export default {
   },
   data() {
     return {
-      isUserNotWaiting: false
+      isUserNotWaiting: false,
+      invited: false
     };
   },
   computed: {
@@ -87,8 +89,13 @@ export default {
       group_id: this.group.id,
       user_id: this.currentUser.id
     });
+    const isInvitedToJoin = await this.$store.dispatch(CHECK_GROUP_INVITED, {
+      group_id: this.group.id,
+      user_id: this.currentUser.id
+    });
 
-    this.isUserNotWaiting = !isWaitingToJoin;
+    this.isUserNotWaiting = !(isWaitingToJoin || isInvitedToJoin);
+    this.invited = isInvitedToJoin;
   }
 };
 </script>

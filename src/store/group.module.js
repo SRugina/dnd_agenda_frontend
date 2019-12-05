@@ -9,7 +9,8 @@ import {
   GROUP_JOIN,
   GROUP_LEAVE,
   CHECK_GROUP_WAITING,
-  REMOVE_FROM_GROUP
+  REMOVE_FROM_GROUP,
+  CHECK_GROUP_INVITED
 } from "./actions.type";
 import { RESET_GROUP_STATE, SET_GROUP } from "./mutations.type";
 
@@ -65,6 +66,20 @@ export const actions = {
         })
         .catch(() => {
           // not found, so is not waiting and is not a member
+          resolve(false);
+        });
+    });
+  },
+  [CHECK_GROUP_INVITED](context, payload) {
+    const { group_id, user_id } = payload;
+    // eslint-disable-next-line no-unused-vars
+    return new Promise((resolve, _reject) => {
+      GroupsService.get(`${group_id}/invited/${user_id}`)
+        .then(({ data }) => {
+          resolve(data.invited);
+        })
+        .catch(() => {
+          // not found, so is not invited and is not a member
           resolve(false);
         });
     });
