@@ -20,12 +20,15 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-yarn-
 
+    - name: Install cross-env
+      run: yarn add cross-env --dev
+
     - name: Install Yarn dependencies
       if: steps.cache.outputs.cache-hit != 'true'
       run: yarn install
 
     - name: Build
-      run: yarn run build:ci
+      run: yarn run build
 
     - name: Deploy
       run: |
