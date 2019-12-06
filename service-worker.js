@@ -20,7 +20,7 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
   /\.(?:css)$/,
   workbox.strategies.staleWhileRevalidate({
-    cacheName: "images",
+    cacheName: "css",
     plugins: [
       new workbox.expiration.Plugin({
         maxEntries: 60,
