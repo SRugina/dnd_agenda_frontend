@@ -24,6 +24,9 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
       run: yarn install
 
+    - name: test
+      run: ls $GITHUB_WORKSPACE/node_modules/.bin/
+
     - name: Build
       run: yarn run build:ci
 
