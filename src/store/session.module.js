@@ -15,6 +15,7 @@ import {
 import { RESET_SESSION_STATE, SET_SESSION } from "./mutations.type";
 import { DateTime } from "luxon";
 import { parseISO } from "date-fns";
+import idb from "@/common/idb.service";
 
 const initialState = {
   session: {
@@ -128,17 +129,25 @@ export const actions = {
 export const mutations = {
   [SET_SESSION](state, session) {
     state.session = session;
+    idb.saveToStorage("session", state);
   },
   [RESET_SESSION_STATE]() {
     for (let f in state) {
       Vue.set(state, f, initialState[f]);
     }
+    idb.saveToStorage("session", state);
   }
 };
 
 const getters = {
   session(state) {
-    return state.session;
+    idb.checkStorage("session").then(data => {
+      if (data != undefined) {
+        return data.session;
+      } else {
+        return state.session;
+      }
+    });
   }
 };
 

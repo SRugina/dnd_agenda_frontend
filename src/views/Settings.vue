@@ -11,7 +11,7 @@
                   <b-form-input
                     id="input-1"
                     v-model="currentUser.image"
-                    type="text"
+                    type="url"
                     placeholder="URL of profile picture"
                   ></b-form-input>
                 </b-form-group>

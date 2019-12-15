@@ -1,6 +1,7 @@
 import { SessionsService } from "@/common/api.service";
 import { FETCH_SESSIONS } from "./actions.type";
 import { FETCH_SESSIONS_START, FETCH_SESSIONS_END } from "./mutations.type";
+import idb from "@/common/idb.service";
 const state = {
   sessions: [],
   isLoadingSessions: true,
@@ -9,13 +10,31 @@ const state = {
 
 const getters = {
   sessionsPagesCount(state) {
-    return state.sessionsPagesCount;
+    idb.checkStorage("home").then(data => {
+      if (data != undefined) {
+        return data.sessionsPagesCount;
+      } else {
+        return state.sessionsPagesCount;
+      }
+    });
   },
   sessions(state) {
-    return state.sessions;
+    idb.checkStorage("home").then(data => {
+      if (data != undefined) {
+        return data.sessionsPagesCount;
+      } else {
+        return state.sessionsPagesCount;
+      }
+    });
   },
   isLoadingSessions(state) {
-    return state.isLoadingSessions;
+    idb.checkStorage("home").then(data => {
+      if (data != undefined) {
+        return data.sessionsPagesCount;
+      } else {
+        return state.sessionsPagesCount;
+      }
+    });
   }
 };
 
@@ -36,11 +55,13 @@ const actions = {
 const mutations = {
   [FETCH_SESSIONS_START](state) {
     state.isLoadingSessions = true;
+    idb.saveToStorage("home", state);
   },
   [FETCH_SESSIONS_END](state, { sessions, sessionsPagesCount }) {
     state.sessions = sessions;
     state.sessionsPagesCount = sessionsPagesCount;
     state.isLoadingSessions = false;
+    idb.saveToStorage("home", state);
   }
 };
 
