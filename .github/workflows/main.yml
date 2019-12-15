@@ -1,6 +1,9 @@
 name: Deploy
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -21,7 +24,7 @@ jobs:
           ${{ runner.os }}-yarn-
 
     - name: Install cross-env
-      run: yarn add cross-env --dev
+      run: yarn install --production=false
 
     - name: Install Yarn dependencies
       if: steps.cache.outputs.cache-hit != 'true'
