@@ -69,11 +69,12 @@ export default {
       errors: state => state.auth.errors
     }),
     showErrors() {
-      this.$bvToast.toast(`${this.errors}`, {
-        title: "Error",
-        autoHideDelay: 5000,
-        variant: "danger"
-      });
+      if (this.errors)
+        this.$bvToast.toast(`${this.errors}`, {
+          title: "Error",
+          autoHideDelay: 5000,
+          variant: "danger"
+        });
       return null;
     }
   }
