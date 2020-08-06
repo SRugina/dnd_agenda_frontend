@@ -1,6 +1,7 @@
 import ApiService from "@/common/api.service";
 import { FETCH_PROFILES } from "./actions.type";
 import { FETCH_PROFILES_START, FETCH_PROFILES_END } from "./mutations.type";
+import idb from "@/common/idb.service";
 
 const state = {
   profiles: [],
@@ -10,13 +11,31 @@ const state = {
 
 const getters = {
   profilesPagesCount(state) {
-    return state.profilesPagesCount;
+    idb.checkStorage("searchProfiles").then(data => {
+      if (data != undefined) {
+        return data.profilesPagesCount;
+      } else {
+        return state.profilesPagesCount;
+      }
+    });
   },
   profiles(state) {
-    return state.profiles;
+    idb.checkStorage("searchProfiles").then(data => {
+      if (data != undefined) {
+        return data.profiles;
+      } else {
+        state.profiles;
+      }
+    });
   },
   isLoadingProfiles(state) {
-    return state.isLoadingProfiles;
+    idb.checkStorage("searchProfiles").then(data => {
+      if (data != undefined) {
+        return data.isLoadingProfiles;
+      } else {
+        return state.isLoadingProfiles;
+      }
+    });
   }
 };
 
@@ -37,11 +56,13 @@ const actions = {
 const mutations = {
   [FETCH_PROFILES_START](state) {
     state.isLoadingProfiles = true;
+    idb.saveToStorage("searchProfiles", state);
   },
   [FETCH_PROFILES_END](state, { users, usersPagesCount }) {
     state.profiles = users;
     state.profilesPagesCount = usersPagesCount;
     state.isLoadingProfiles = false;
+    idb.saveToStorage("searchProfiles", state);
   }
 };
 

@@ -30,10 +30,15 @@ workbox.routing.registerRoute(
   })
 );
 
+const bgSyncPlugin = new workbox.backgroundSync.Plugin("apiQueue", {
+  maxRetentionTime: 24 * 60 // Retry for max of 24 Hours
+});
+
 workbox.routing.registerRoute(
   new RegExp("https://api.dndearall.com/.*"),
   workbox.strategies.networkFirst({
-    cacheName: "api"
+    cacheName: "api",
+    plugins: [bgSyncPlugin]
   })
 );
 

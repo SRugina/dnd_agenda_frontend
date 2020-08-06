@@ -1,6 +1,7 @@
 import ApiService from "@/common/api.service";
 import { FETCH_GROUPS } from "./actions.type";
 import { FETCH_GROUPS_START, FETCH_GROUPS_END } from "./mutations.type";
+import idb from "@/common/idb.service";
 
 const state = {
   groups: [],
@@ -10,13 +11,31 @@ const state = {
 
 const getters = {
   groupsPagesCount(state) {
-    return state.groupsPagesCount;
+    idb.checkStorage("searchGroups").then(data => {
+      if (data != undefined) {
+        return data.groupsPagesCount;
+      } else {
+        return state.groupsPagesCount;
+      }
+    });
   },
   groups(state) {
-    return state.groups;
+    idb.checkStorage("searchGroups").then(data => {
+      if (data != undefined) {
+        return data.groups;
+      } else {
+        return state.groups;
+      }
+    });
   },
   isLoadingGroups(state) {
-    return state.isLoadingGroups;
+    idb.checkStorage("searchGroups").then(data => {
+      if (data != undefined) {
+        return data.isLoadingGroups;
+      } else {
+        return state.isLoadingGroups;
+      }
+    });
   }
 };
 
@@ -37,11 +56,13 @@ const actions = {
 const mutations = {
   [FETCH_GROUPS_START](state) {
     state.isLoadingGroups = true;
+    idb.saveToStorage("searchGroups", state);
   },
   [FETCH_GROUPS_END](state, { groups, groupsPagesCount }) {
     state.groups = groups;
     state.groupsPagesCount = groupsPagesCount;
     state.isLoadingGroups = false;
+    idb.saveToStorage("searchGroups", state);
   }
 };
 

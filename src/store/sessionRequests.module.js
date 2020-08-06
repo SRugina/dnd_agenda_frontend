@@ -8,6 +8,7 @@ import {
   FETCH_SESSION_REQUESTS_START,
   FETCH_SESSION_REQUESTS_END
 } from "./mutations.type";
+import idb from "@/common/idb.service";
 
 const state = {
   sessionRequests: [],
@@ -17,13 +18,31 @@ const state = {
 
 const getters = {
   sessionRequestsPagesCount(state) {
-    return state.sessionRequestsPagesCount;
+    idb.checkStorage("sessionRequests").then(data => {
+      if (data != undefined) {
+        return data.sessionRequestsPagesCount;
+      } else {
+        return state.sessionRequestsPagesCount;
+      }
+    });
   },
   sessionRequests(state) {
-    return state.sessionRequests;
+    idb.checkStorage("sessionRequests").then(data => {
+      if (data != undefined) {
+        return data.sessionRequests;
+      } else {
+        state.sessionRequests;
+      }
+    });
   },
   isLoadingSessionRequests(state) {
-    return state.isLoadingSessionRequests;
+    idb.checkStorage("sessionRequests").then(data => {
+      if (data != undefined) {
+        return data.isLoadingSessionRequests;
+      } else {
+        return state.isLoadingSessionRequests;
+      }
+    });
   }
 };
 
@@ -54,6 +73,7 @@ const actions = {
 const mutations = {
   [FETCH_SESSION_REQUESTS_START](state) {
     state.isLoadingSessionRequests = true;
+    idb.saveToStorage("sessionRequests", state);
   },
   [FETCH_SESSION_REQUESTS_END](
     state,
@@ -62,6 +82,7 @@ const mutations = {
     state.sessionRequests = sessionRequests;
     state.sessionRequestsPagesCount = sessionRequestsPagesCount;
     state.isLoadingSessionRequests = false;
+    idb.saveToStorage("sessionRequests", state);
   }
 };
 

@@ -1,6 +1,7 @@
 import ApiService from "@/common/api.service";
 import { FETCH_PROFILE } from "./actions.type";
 import { SET_PROFILE } from "./mutations.type";
+import idb from "@/common/idb.service";
 
 const state = {
   errors: {},
@@ -9,7 +10,13 @@ const state = {
 
 const getters = {
   profile(state) {
-    return state.profile;
+    idb.checkStorage("profile").then(data => {
+      if (data != undefined) {
+        return data.profile;
+      } else {
+        return state.profile;
+      }
+    });
   }
 };
 
@@ -38,6 +45,7 @@ const mutations = {
       state.profile.image = "https://dndearall.com/img/smiley.jpg";
     }
     state.errors = {};
+    idb.saveToStorage("profile", state);
   }
 };
 

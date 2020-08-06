@@ -9,6 +9,7 @@ import {
   UPDATE_USER_PASSWORD
 } from "./actions.type";
 import { SET_AUTH, PURGE_AUTH, SET_ERROR } from "./mutations.type";
+import idb from "@/common/idb.service";
 
 const state = {
   errors: null,
@@ -18,10 +19,22 @@ const state = {
 
 const getters = {
   currentUser(state) {
-    return state.user;
+    idb.checkStorage("auth").then(data => {
+      if (data != undefined) {
+        return data.user;
+      } else {
+        return state.user;
+      }
+    });
   },
   isAuthenticated(state) {
-    return state.isAuthenticated;
+    idb.checkStorage("auth").then(data => {
+      if (data != undefined) {
+        return data.isAuthenticated;
+      } else {
+        return state.isAuthenticated;
+      }
+    });
   }
 };
 
@@ -103,18 +116,21 @@ const actions = {
 const mutations = {
   [SET_ERROR](state, error) {
     state.errors = error;
+    idb.saveToStorage("auth", state);
   },
   [SET_AUTH](state, user) {
     state.isAuthenticated = true;
     state.user = user;
     state.errors = {};
     JwtService.saveToken(state.user.token);
+    idb.saveToStorage("auth", state);
   },
   [PURGE_AUTH](state) {
     state.isAuthenticated = false;
     state.user = {};
     state.errors = null;
     JwtService.destroyToken();
+    idb.saveToStorage("auth", state);
   }
 };
 

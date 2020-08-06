@@ -9,6 +9,7 @@ import {
   FETCH_GROUP_INVITES_START,
   FETCH_GROUP_INVITES_END
 } from "./mutations.type";
+import idb from "@/common/idb.service";
 
 const state = {
   groupInvites: [],
@@ -18,13 +19,31 @@ const state = {
 
 const getters = {
   groupInvitesPagesCount(state) {
-    return state.groupInvitesPagesCount;
+    idb.checkStorage("groupInvites").then(data => {
+      if (data != undefined) {
+        return data.groupInvitesPagesCount;
+      } else {
+        return state.groupInvitesPagesCount;
+      }
+    });
   },
   groupInvites(state) {
-    return state.groupInvites;
+    idb.checkStorage("groupInvites").then(data => {
+      if (data != undefined) {
+        return data.groupInvites;
+      } else {
+        return state.groupInvites;
+      }
+    });
   },
   isLoadingGroupInvites(state) {
-    return state.isLoadingGroupInvites;
+    idb.checkStorage("groupInvites").then(data => {
+      if (data != undefined) {
+        return data.isLoadingGroupInvites;
+      } else {
+        return state.isLoadingGroupInvites;
+      }
+    });
   }
 };
 
@@ -57,11 +76,13 @@ const actions = {
 const mutations = {
   [FETCH_GROUP_INVITES_START](state) {
     state.isLoadingGroupInvites = true;
+    idb.saveToStorage("groupInvites", state);
   },
   [FETCH_GROUP_INVITES_END](state, { groupInvites, groupInvitesPagesCount }) {
     state.groupInvites = groupInvites;
     state.groupInvitesPagesCount = groupInvitesPagesCount;
     state.isLoadingGroupInvites = false;
+    idb.saveToStorage("groupInvites", state);
   }
 };
 

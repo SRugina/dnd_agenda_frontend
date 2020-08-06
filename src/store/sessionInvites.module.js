@@ -9,6 +9,7 @@ import {
   FETCH_SESSION_INVITES_START,
   FETCH_SESSION_INVITES_END
 } from "./mutations.type";
+import idb from "@/common/idb.service";
 
 const state = {
   sessionInvites: [],
@@ -18,13 +19,31 @@ const state = {
 
 const getters = {
   sessionInvitesPagesCount(state) {
-    return state.sessionInvitesPagesCount;
+    idb.checkStorage("sessionInvites").then(data => {
+      if (data != undefined) {
+        return data.sessionInvitesPagesCount;
+      } else {
+        return state.sessionInvitesPagesCount;
+      }
+    });
   },
   sessionInvites(state) {
-    return state.sessionInvites;
+    idb.checkStorage("sessionInvites").then(data => {
+      if (data != undefined) {
+        return data.sessionInvites;
+      } else {
+        state.sessionInvites;
+      }
+    });
   },
   isLoadingSessionInvites(state) {
-    return state.isLoadingSessionInvites;
+    idb.checkStorage("sessionInvites").then(data => {
+      if (data != undefined) {
+        return data.sessionInvites;
+      } else {
+        return state.sessionInvites;
+      }
+    });
   }
 };
 
@@ -57,6 +76,7 @@ const actions = {
 const mutations = {
   [FETCH_SESSION_INVITES_START](state) {
     state.isLoadingSessionInvites = true;
+    idb.saveToStorage("sessionInvites", state);
   },
   [FETCH_SESSION_INVITES_END](
     state,
@@ -65,6 +85,7 @@ const mutations = {
     state.sessionInvites = sessionInvites;
     state.sessionInvitesPagesCount = sessionInvitesPagesCount;
     state.isLoadingSessionInvites = false;
+    idb.saveToStorage("sessionInvites", state);
   }
 };
 

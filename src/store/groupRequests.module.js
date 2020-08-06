@@ -8,6 +8,7 @@ import {
   FETCH_GROUP_REQUESTS_START,
   FETCH_GROUP_REQUESTS_END
 } from "./mutations.type";
+import idb from "@/common/idb.service";
 
 const state = {
   groupRequests: [],
@@ -17,13 +18,31 @@ const state = {
 
 const getters = {
   groupRequestsPagesCount(state) {
-    return state.groupRequestsPagesCount;
+    idb.checkStorage("groupRequests").then(data => {
+      if (data != undefined) {
+        return data.groupRequestsPagesCount;
+      } else {
+        return state.groupRequestsPagesCount;
+      }
+    });
   },
   groupRequests(state) {
-    return state.groupRequests;
+    idb.checkStorage("groupRequests").then(data => {
+      if (data != undefined) {
+        return data.groupRequests;
+      } else {
+        return state.groupRequests;
+      }
+    });
   },
   isLoadingGroupRequests(state) {
-    return state.isLoadingGroupRequests;
+    idb.checkStorage("groupRequests").then(data => {
+      if (data != undefined) {
+        return data.isLoadingGroupRequests;
+      } else {
+        return state.isLoadingGroupRequests;
+      }
+    });
   }
 };
 
@@ -54,6 +73,7 @@ const actions = {
 const mutations = {
   [FETCH_GROUP_REQUESTS_START](state) {
     state.isLoadingGroupRequests = true;
+    idb.saveToStorage("groupRequests", state);
   },
   [FETCH_GROUP_REQUESTS_END](
     state,
@@ -62,6 +82,7 @@ const mutations = {
     state.groupRequests = groupRequests;
     state.groupRequestsPagesCount = groupRequestsPagesCount;
     state.isLoadingGroupRequests = false;
+    idb.saveToStorage("groupRequests", state);
   }
 };
 

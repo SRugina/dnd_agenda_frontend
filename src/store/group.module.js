@@ -13,6 +13,7 @@ import {
   CHECK_GROUP_INVITED
 } from "./actions.type";
 import { RESET_GROUP_STATE, SET_GROUP } from "./mutations.type";
+import idb from "@/common/idb.service";
 
 const initialState = {
   group: {
@@ -94,17 +95,25 @@ export const actions = {
 export const mutations = {
   [SET_GROUP](state, group) {
     state.group = group;
+    idb.saveToStorage("group", state);
   },
   [RESET_GROUP_STATE]() {
     for (let f in state) {
       Vue.set(state, f, initialState[f]);
     }
+    idb.saveToStorage("group", state);
   }
 };
 
 const getters = {
   group(state) {
-    return state.group;
+    idb.checkStorage("group").then(data => {
+      if (data != undefined) {
+        return data.group;
+      } else {
+        return state.group;
+      }
+    });
   }
 };
 

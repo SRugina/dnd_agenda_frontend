@@ -63,7 +63,9 @@
         </b-col>
       </b-row>
     </b-container>
-    <b-container v-else></b-container>
+    <b-container v-else>
+      {{ isAuthenticated }}
+    </b-container>
   </div>
 </template>
 
